@@ -3,62 +3,699 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nova Rescue</title>
+  <title>Nova Rescue: Space Survival</title>
+  <meta name="description" content="Nova Rescue is a sci-fi action adventure game with alien worlds, rescue missions, pet companions, weapon pickups, boss fights, and offline single-player gameplay.">
+  <link rel="canonical" href="https://isthebestman.github.io/starcore-rescue-support/">
+  <meta property="og:title" content="Nova Rescue: Space Survival">
+  <meta property="og:description" content="Battle alien worlds, rescue survivors, collect weapons, and defeat planet bosses in quick offline runs.">
+  <meta property="og:image" content="https://isthebestman.github.io/starcore-rescue-support/assets/app-icon.jpg">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#101923">
   <style>
+    :root {
+      color-scheme: light;
+      --ink: #111827;
+      --muted: #5d6673;
+      --line: #d8e0ea;
+      --paper: #ffffff;
+      --wash: #f4f7fb;
+      --space: #101923;
+      --signal: #12a878;
+      --accent: #df4f3f;
+      --gold: #f4b43b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.6;
-      color: #17202a;
-      background: #f7fafc;
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--wash);
     }
-    main {
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 44px 22px 64px;
-      background: #ffffff;
-      min-height: 100vh;
-    }
-    h1 {
-      margin: 0 0 12px;
-      font-size: 34px;
-      line-height: 1.2;
-      color: #0b1220;
-    }
+
     a {
-      color: #0969da;
+      color: inherit;
     }
-    .links {
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(216, 224, 234, 0.85);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 14px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .brand img {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(17, 24, 39, 0.16);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+    }
+
+    .hero {
+      background: #101923;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .hero-inner {
       display: grid;
+      grid-template-columns: minmax(0, 1fr) 390px;
+      gap: 44px;
+      align-items: center;
+      width: min(1120px, calc(100% - 32px));
+      min-height: 650px;
+      margin: 0 auto;
+      padding: 62px 0 48px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 16px;
+      color: #c9f7e8;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 99px;
+      background: var(--signal);
+      box-shadow: 0 0 0 5px rgba(18, 168, 120, 0.16);
+    }
+
+    h1 {
+      max-width: 700px;
+      margin: 0;
+      font-size: 72px;
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .lede {
+      max-width: 620px;
+      margin: 22px 0 0;
+      color: #d7e0e7;
+      font-size: 20px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
       gap: 12px;
+      margin-top: 30px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .button.primary {
+      background: #ffffff;
+      color: #101923;
+    }
+
+    .button.secondary {
+      border-color: rgba(255, 255, 255, 0.34);
+      color: #ffffff;
+    }
+
+    .proof {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 28px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .proof li {
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      padding: 8px 11px;
+      color: #ecf4f2;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .device {
+      position: relative;
+      width: min(100%, 390px);
+      aspect-ratio: 0.62;
+      margin-left: auto;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 34px;
+      padding: 16px;
+      background: #071016;
+      box-shadow: 0 32px 70px rgba(0, 0, 0, 0.36);
+    }
+
+    .screen {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 26% 22%, rgba(244, 180, 59, 0.18), transparent 20%),
+        linear-gradient(180deg, #19242c 0%, #0d141a 100%);
+    }
+
+    .screen-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+    }
+
+    .app-icon {
+      position: absolute;
+      top: 32px;
+      left: 50%;
+      width: 116px;
+      height: 116px;
+      border-radius: 24px;
+      transform: translateX(-50%);
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.36);
+    }
+
+    .mission-card {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      bottom: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 18px;
+      padding: 18px;
+      background: rgba(7, 16, 22, 0.78);
+    }
+
+    .mission-card h2 {
+      margin: 0 0 10px;
+      color: #fff;
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .mission-card p {
+      margin: 0;
+      color: #cdd7dd;
+      font-size: 15px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .stat {
+      border-radius: 12px;
+      padding: 12px 10px;
+      background: rgba(255, 255, 255, 0.08);
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .stat span {
+      color: #9fb0bb;
+      font-size: 12px;
+    }
+
+    main {
+      background: var(--paper);
+    }
+
+    .section {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 62px 0;
+    }
+
+    .section h2 {
+      margin: 0 0 14px;
+      color: var(--ink);
+      font-size: 34px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .section-intro {
+      max-width: 720px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
       margin-top: 28px;
     }
-    .link {
-      border: 1px solid #d8e1ea;
-      border-radius: 10px;
-      padding: 16px 18px;
-      background: #fbfdff;
+
+    .feature {
+      min-height: 178px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      background: #fbfcfe;
+    }
+
+    .feature-mark {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      background: #e9f7f1;
+      color: #087251;
+      font-weight: 900;
+    }
+
+    .feature:nth-child(2) .feature-mark {
+      background: #fff0e8;
+      color: #b54328;
+    }
+
+    .feature:nth-child(3) .feature-mark {
+      background: #fff7df;
+      color: #9a6410;
+    }
+
+    .feature h3 {
+      margin: 0 0 8px;
+      font-size: 19px;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .band {
+      background: #f4f7fb;
+      border-block: 1px solid #e5ebf2;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 28px;
+      padding: 0;
+      list-style: none;
+      counter-reset: steps;
+    }
+
+    .steps li {
+      counter-increment: steps;
+      min-height: 146px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      background: var(--paper);
+    }
+
+    .steps li::before {
+      content: counter(steps);
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      margin-bottom: 16px;
+      border-radius: 99px;
+      background: var(--space);
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .steps strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .steps span {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .download-panel {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 28px;
+      background: #101923;
+      color: #fff;
+    }
+
+    .download-panel h2 {
+      color: #fff;
+    }
+
+    .download-panel p {
+      max-width: 680px;
+      margin: 0;
+      color: #d7e0e7;
+    }
+
+    .download-panel .button {
+      background: #fff;
+      color: #101923;
+    }
+
+    .footer {
+      border-top: 1px solid #e5ebf2;
+      background: #fff;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      font-weight: 650;
+    }
+
+    @media (max-width: 880px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        min-height: 0;
+        padding-top: 46px;
+      }
+
+      h1 {
+        font-size: 56px;
+      }
+
+      .device {
+        margin: 0 auto;
+      }
+
+      .feature-grid,
+      .steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .download-panel {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .nav {
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+      }
+
+      .hero-inner {
+        width: min(100% - 24px, 1120px);
+        padding: 36px 0 34px;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      .lede {
+        font-size: 18px;
+      }
+
+      .feature-grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        width: min(100% - 24px, 1120px);
+        padding: 44px 0;
+      }
+
+      .section h2 {
+        font-size: 28px;
+      }
+
+      .device {
+        border-radius: 28px;
+        padding: 12px;
+      }
+
+      .download-panel {
+        padding: 22px;
+      }
     }
   </style>
 </head>
 <body>
-  <main>
-    <h1>Nova Rescue</h1>
-    <p>
-      Nova Rescue is a sci-fi action game about pets, bosses, rescue missions,
-      and chapter-based planet adventures.
-    </p>
-
-    <div class="links">
-      <div class="link">
-        <strong>Support:</strong>
-        <a href="support.html">Open support page</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="./">
+        <img src="assets/app-icon.jpg" alt="Nova Rescue app icon">
+        <span>Nova Rescue</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="support.html">Support</a>
+        <a href="privacy-policy.html">Privacy</a>
       </div>
-      <div class="link">
-        <strong>Privacy:</strong>
-        <a href="privacy-policy.html">Read privacy policy</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <p class="eyebrow">Offline sci-fi action adventure</p>
+        <h1>Nova Rescue: Space Survival</h1>
+        <p class="lede">
+          Battle through alien worlds, rescue survivors, collect weapons, and
+          defeat powerful planet bosses in quick single-player runs.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="https://apps.apple.com/us/app/nova-rescue/id6774428821" rel="noopener">Download on the App Store</a>
+          <a class="button secondary" href="#features">Explore features</a>
+        </div>
+        <ul class="proof" aria-label="Game highlights">
+          <li>4+ age rating</li>
+          <li>No account required</li>
+          <li>Offline play</li>
+          <li>Optional rewarded ads</li>
+        </ul>
+      </div>
+
+      <div class="device" aria-label="Nova Rescue product preview">
+        <div class="screen">
+          <div class="screen-grid" aria-hidden="true"></div>
+          <img class="app-icon" src="assets/app-icon.jpg" alt="Nova Rescue">
+          <div class="mission-card">
+            <h2>Rescue the crew. Survive the boss.</h2>
+            <p>
+              Dodge enemy swarms, grab weapon upgrades, and bring your pet
+              companion into every mission.
+            </p>
+            <div class="stats" aria-label="Gameplay features">
+              <div class="stat">
+                <strong>Pets</strong>
+                <span>battle skills</span>
+              </div>
+              <div class="stat">
+                <strong>Boss</strong>
+                <span>planet fights</span>
+              </div>
+              <div class="stat">
+                <strong>Gear</strong>
+                <span>pickups</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
+
+  <main>
+    <section class="section" id="features">
+      <h2>Fast runs with clear goals</h2>
+      <p class="section-intro">
+        Nova Rescue is built for short, exciting sessions: move, shoot, collect,
+        rescue, upgrade, and push deeper into hostile alien planets.
+      </p>
+
+      <div class="feature-grid">
+        <article class="feature">
+          <div class="feature-mark">R</div>
+          <h3>Rescue missions</h3>
+          <p>
+            Enter sci-fi stages with mission moments, survivors to save, and
+            pressure that builds as enemies close in.
+          </p>
+        </article>
+        <article class="feature">
+          <div class="feature-mark">B</div>
+          <h3>Alien boss fights</h3>
+          <p>
+            Face planet bosses, dodge attack patterns, and use weapon pickups to
+            turn tight fights into comebacks.
+          </p>
+        </article>
+        <article class="feature">
+          <div class="feature-mark">P</div>
+          <h3>Pet companions</h3>
+          <p>
+            Bring a pet companion into battle for helpful skills during dangerous
+            rescue runs.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="section">
+        <h2>How a run plays</h2>
+        <p class="section-intro">
+          Simple controls keep the action readable while upgrades, healing items,
+          and boss encounters add the tension.
+        </p>
+        <ol class="steps">
+          <li>
+            <strong>Move and dodge</strong>
+            <span>Use smooth joystick movement to weave through enemy swarms.</span>
+          </li>
+          <li>
+            <strong>Collect weapons</strong>
+            <span>Pick up rockets, healing items, treasure, and combat upgrades.</span>
+          </li>
+          <li>
+            <strong>Rescue survivors</strong>
+            <span>Clear mission moments as each alien world becomes more dangerous.</span>
+          </li>
+          <li>
+            <strong>Defeat bosses</strong>
+            <span>Survive planet boss fights with smart movement and your pet's help.</span>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="download-panel">
+        <div>
+          <h2>Play Nova Rescue on iPhone or iPad</h2>
+          <p>
+            Free to download. No online multiplayer, no casino mechanics, no
+            gambling, and no real-money rewards.
+          </p>
+        </div>
+        <a class="button" href="https://apps.apple.com/us/app/nova-rescue/id6774428821" rel="noopener">Open App Store</a>
+      </div>
+    </section>
   </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© 2026 Nova Rescue. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="support.html">Support</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="app-ads.txt">app-ads.txt</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MobileApplication",
+      "name": "Nova Rescue",
+      "operatingSystem": "iOS",
+      "applicationCategory": "GameApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "url": "https://apps.apple.com/us/app/nova-rescue/id6774428821"
+    }
+  </script>
 </body>
 </html>
